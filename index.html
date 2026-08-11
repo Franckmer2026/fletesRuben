@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fletes Rubén Mendoza | Fletes y Mudanzas</title>
+  <style>
+    :root {
+      --bg-color: #f4f1ea;
+      --card-bg: #e6e2d8;
+      --card-bg-light: #ffffff;
+      --text-color: #222222;
+      --text-secondary: #555555;
+      --primary-green: #10b981;
+      --primary-blue: #2563eb;
+      --btn-green: #12a150;
+      --btn-green-hover: #0e8340;
+      --btn-light: #e5dfd3;
+      --border-color: #d1cbc1;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --card-bg-light: #252525;
+      --text-color: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --btn-light: #2a2a2a;
+      --border-color: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+      padding-bottom: 60px;
+    }
+
+    /* Container global */
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header / Navbar */
+    header {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--text-color);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      background-color: var(--primary-blue);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+    }
+
+    .theme-toggle {
+      background-color: var(--btn-light);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin: 20px 0 40px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: #d1fae5;
+      color: #065f46;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--primary-blue);
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 28px auto;
+      line-height: 1.5;
+    }
+
+    .cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp {
+      background-color: var(--btn-green);
+      color: white;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: var(--btn-green-hover);
+    }
+
+    .btn-call {
+      background-color: var(--btn-light);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Vehicle Card Section */
+    .vehicle-section {
+      margin: 50px 0;
+    }
+
+    .vehicle-card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    /* Carousel Container Styles */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .carousel-slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Controles del Carrusel */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .dot.active {
+      background: #ffffff;
+      width: 24px;
+      border-radius: 5px;
+    }
+
+    .card-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .card-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .features-list {
+      list-style: none;
+    }
+
+    .features-list li {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .check-icon {
+      color: var(--primary-green);
+      font-weight: bold;
+    }
+
+    /* Services Grid */
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 60px 0 30px 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background-color: var(--card-bg-light);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .service-card .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .service-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* Reviews Section */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .review-card {
+      background-color: var(--card-bg-light);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .review-stars {
+      color: #f59e0b;
+      margin-bottom: 8px;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .review-author {
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* FAQ / Info Banner */
+    .info-banner {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 50px 0;
+      text-align: center;
+    }
+
+    .info-banner h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .info-banner p {
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 0 auto 20px auto;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 30px 0;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    /* Floating WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--btn-green);
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-decoration: none;
+      font-size: 26px;
+      z-index: 1000;
+      transition: transform 0.2s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+    }
+
+    @media (max-width: 768px) {
+      .vehicle-card {
+        grid-template-columns: 1fr;
+      }
+      .carousel-container {
+        height: 230px;
+      }
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <a href="#" class="logo">
+        <span class="logo-icon">🚚</span>
+        <span>Fletes Rubén</span>
+      </a>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        🌙 Modo Oscuro
+      </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="badge">✔ Fletes Rápidos y Económicos en Mendoza</div>
+      <h1>Servicio de Fletes y Mudanzas en <span>Mendoza y Alrededores</span></h1>
+      <p>Servicio de transporte particular, fletes urgentes, traslado y auxilio de motos, mudanzas, muebles, electrodomésticos y retiro de compras. Cotización directa al instante por WhatsApp.</p>
+      
+      <div class="cta-group">
+        <a href="https://wa.me/5492615693687" class="btn btn-whatsapp" target="_blank">
+          💬 Consultar por WhatsApp
+        </a>
+        <a href="tel:2615693687" class="btn btn-call">
+          📞 Llamar al 261 569-3687
+        </a>
+      </div>
+    </section>
+
+    <!-- Vehicle Card / Carrusel Infinito -->
+    <section class="vehicle-section">
+      <div class="vehicle-card">
+        
+        <!-- Carrusel -->
+        <div class="carousel-container" id="carousel">
+          <div class="carousel-slides" id="carouselSlides">
+            <div class="carousel-slide">
+              <img src="fiatstrada.png" alt="Fiat Strada en Mendoza">
+            </div>
+            <div class="carousel-slide">
+              <img src="fiatstrada2.jpeg" alt="Fiat Strada Lateral con Gráfica Rubén">
+            </div>
+            <div class="carousel-slide">
+              <img src="fiatstrada3.jpeg" alt="Fiat Strada Frente con Cartel Fletes Rubén">
+            </div>
+            <div class="carousel-slide">
+              <img src="fiatstrada4.jpeg" alt="Fiat Strada Vista de Frente en Mendoza">
+            </div>
+          </div>
+
+          <button class="carousel-btn prev" onclick="moveSlide(-1)">❮</button>
+          <button class="carousel-btn next" onclick="moveSlide(1)">❯</button>
+
+          <div class="carousel-dots">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <h2>Camioneta Fiat Strada Equipada</h2>
+          <p>Unidad Fiat Strada cabina simple con caja abierta, ideal para trasladar cargas urbanas, auxilio de motos y fletes particulares de forma rápida, segura y sin complicaciones de estacionamiento.</p>
+          
+          <ul class="features-list">
+            <li><span class="check-icon">✓</span> Caja con amarre seguro para motos, muebles y cargas generales</li>
+            <li><span class="check-icon">✓</span> Acceso ágil a calles angostas e ingreso a microcentro</li>
+            <li><span class="check-icon">✓</span> Atención personalizada y puntualidad garantizada</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <section class="services-grid">
+      <div class="service-card">
+        <div class="icon">🏍️</div>
+        <h3>Traslado / Auxilio de Motos</h3>
+        <p>Servicio seguro para transporte de motocicletas por auxilio, compra/venta o traslado particular en Mendoza.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">📦</div>
+        <h3>Pequeñas Mudanzas</h3>
+        <p>Traslado de departamentos, habitaciones, oficinas y fletes particulares dentro de Gran Mendoza.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">🛋️</div>
+        <h3>Traslado de Muebles</h3>
+        <p>Transporte seguro de sillones, mesas, camas, colchones y amoblamientos de todo tipo.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">🛒</div>
+        <h3>Retiro de Compras</h3>
+        <p>Retiramos tu compra en Easy, Sodimac, Hipermercados o comercios y te la llevamos a tu domicilio.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">⚡</div>
+        <h3>Fletes de Urgencia</h3>
+        <p>Disponibilidad e incorporación rápida para viajes inmediatos según demanda.</p>
+      </div>
+    </section>
+
+    <!-- Reseñas / Opiniones -->
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <section class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Puntual, cuidadoso con las cosas y muy buena predisposición. Lo super recomiendo para fletes en Mendoza."</p>
+        <div class="review-author">— Marcelo R. (Godoy Cruz)</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Excelente atención por WhatsApp. Me presupuestó al instante y cumplió en tiempo y forma."</p>
+        <div class="review-author">— Laura G. (Guaymallén)</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Muy buen precio y el servicio impecable para llevar una heladera y un lavarropas."</p>
+        <div class="review-author">— Carlos M. (Capital)</div>
+      </div>
+    </section>
+
+    <!-- Banner Cotización -->
+    <section class="info-banner">
+      <h3>¿Necesitás un presupuesto inmediato?</h3>
+      <p>Envianos el origen, destino y qué objetos o vehículo necesitás trasladar para darte la mejor tarifa en el acto.</p>
+      <a href="https://wa.me/5492615693687" class="btn btn-whatsapp" target="_blank">
+        💬 Pedir Cotización sin Compromiso
+      </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© Fletes Rubén Mendoza — Servicio de Fletes y Mudanzas Particulares</p>
+      <p style="margin-top: 5px;">Mendoza, Argentina | Tel: 261 569-3687</p>
+    </footer>
+  </div>
+
+  <!-- Botón flotante WhatsApp -->
+  <a href="https://wa.me/5492615693687" class="whatsapp-float" target="_blank" title="Contactar por WhatsApp">
+    💬
+  </a>
+
+  <script>
+    // Toggle Modo Oscuro
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Lógica del Carrusel Infinito
+    let currentIndex = 0;
+    const slidesContainer = document.getElementById('carouselSlides');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = 4;
+    let autoSlideInterval;
+
+    function updateCarousel() {
+      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function moveSlide(direction) {
+      currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+      updateCarousel();
+      resetTimer();
+    }
+
+    function currentSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+      resetTimer();
+    }
+
+    function startTimer() {
+      autoSlideInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateCarousel();
+      }, 4000);
+    }
+
+    function resetTimer() {
+      clearInterval(autoSlideInterval);
+      startTimer();
+    }
+
+    // Iniciar rotación automática al cargar
+    startTimer();
+  </script>
+</body>
+</html>
